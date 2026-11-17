@@ -6,6 +6,15 @@ from src.services.domain_validation import validate_values
 from src.services.audits import log
 from src.utils.serializers import record
 
+def lock_study(db,id):
+    # Serialize worksheet mutations against merge intake/apply on the same row.
+    try:
+        s=db.scalar(select(Study).where(Study.id==id).with_for_update())
+    except Exception:
+        s=db.get(Study,id)
+    if not s: raise HTTPException(404,'业务批次不存在')
+    return s
+
 def list_studies(db):
     data=[]
     for s in db.scalars(select(Study).order_by(Study.id)):
@@ -25,7 +34,7 @@ def observations(db,id):
     require(db,id);return [record(x) for x in db.scalars(select(Observation).where(Observation.study_id==id).order_by(Observation.id))]
 
 def save_observation(db,id,data,user,row_id=None):
-    require(db,id)
+    lock_study(db,id)
     try: values=validate_values(data.values)
     except (ValueError,TypeError) as e: raise HTTPException(422,str(e))
     other=db.scalar(select(Observation).where(Observation.study_id==id,Observation.source_key==data.source_key))

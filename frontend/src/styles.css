@@ -8,3 +8,13 @@ main { border-left:1px solid var(--rule);margin-left:3%;max-width:1450px; }
 .strip { border-top:4px solid var(--accent); }
 .worksheet { border-left:0;border-bottom:3px solid var(--accent); }
 @media(max-width:767px){main{margin-left:0;border-left:0}.hero{grid-template-columns:1fr}}
+
+/* Offline three-way merge workbench. */
+.json-box{min-height:240px;font:12px/1.6 'IBM Plex Mono',monospace}
+.pkg-card{padding:10px 14px;background:color-mix(in oklch,var(--accent) 8%,var(--paper));border-left:4px solid var(--accent);font-size:13px;min-height:70px}
+.pkg-card i{color:oklch(55% .05 150)}
+.conflict-card{border:1px solid var(--rule);border-left:6px solid oklch(60% .14 40);padding:8px 22px 18px;margin:22px 0;background:color-mix(in oklch,oklch(60% .14 40) 5%,var(--paper))}
+.conflict-card h3{font-size:17px;margin:12px 0}
+.conflict-card h3 small{font-weight:400;font-family:'IBM Plex Mono',monospace}
+.conflict-card .inline-form{align-items:end}
+#adjudicate-btn{background:oklch(55% .13 40);border-color:oklch(55% .13 40)}
